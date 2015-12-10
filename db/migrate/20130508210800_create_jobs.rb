@@ -1,7 +1,7 @@
 class CreateJobs < ActiveRecord::Migration
 
-  def self.up
-    create_table Refinery::Jobs::Job.table_name, :id => true do |t|
+  def change
+    create_table :refinery_jobs do |t|
       t.string      :title
       t.text        :description
       t.string      :employment_terms
@@ -11,10 +11,10 @@ class CreateJobs < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index Refinery::Jobs::Job.table_name, :id
+    add_index :refinery_jobs, :id
 
     # can't use Model.table_name as it would load class and initializers haven't run to attach refinery_resources dragonfly app
-    create_table 'refinery_job_applications', :id => true do |t|
+    create_table :refinery_job_applications do |t|
       t.integer     :job_id
       t.string      :name
       t.string      :phone
@@ -25,16 +25,7 @@ class CreateJobs < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index 'refinery_job_applications', :id
-    add_index 'refinery_job_applications', :job_id
+    add_index :refinery_job_applications, :id
+    add_index :refinery_job_applications, :job_id
   end
-
-  def self.down
-    Refinery::UserPlugin.destroy_all({:name => "refinerycms_job"})
-    Refinery::Page.delete_all({:link_url => "/jobs"})
-
-    drop_table Refinery::Jobs::Job.table_name
-    drop_table 'refinery_job_applications'
-  end
-
 end

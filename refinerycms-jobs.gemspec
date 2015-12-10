@@ -4,12 +4,12 @@ $:.push File.expand_path('../lib', __FILE__)
 Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.name              = %q{refinerycms-jobs}
-  s.version           = '2.0.0'
+  s.version           = '3.0.0'
   s.summary           = %q{Ruby on Rails jobs engine for Refinery CMS.}
   s.description       = %q{Open source Ruby on Rails jobs engine designed for integration with Refinery CMS.}
   s.email             = %q{}
-  s.homepage          = %q{https://github.com/flatterline/refinerycms-jobs}
-  s.authors           = ['Flatterline']
+  s.homepage          = %q{https://github.com/bisscomm/refinerycms-jobs}
+  s.authors           = ['Flatterline', 'Brice Sanchez']
   s.license           = %q{MIT}
   s.require_paths     = %w(lib)
 
@@ -17,10 +17,11 @@ Gem::Specification.new do |s|
   s.test_files        = `git ls-files -- spec/*`.split("\n")
 
   # Runtime dependencies
-  s.add_dependency 'refinerycms-core',     '~> 2.0.3'
-  s.add_dependency 'refinerycms-settings', '~> 2.0.1'
-  s.add_dependency 'dragonfly',            '~> 0.9.8'
-
-  # Development dependencies
-  s.add_development_dependency 'refinerycms-testing', '~> 2.0.0'
+  s.add_dependency 'refinerycms-core', '~> 3.0.0'
+  s.add_dependency 'refinerycms-settings', '~> 3.0.0'
+  s.add_dependency 'globalize', ['>= 4.0.0', '< 5.2']
+  s.add_dependency 'friendly_id-globalize'
+  s.add_dependency 'dragonfly', '~> 1.0.7'
+  s.add_dependency 'filters_spam', '~> 0.2'
+  s.add_dependency 'acts_as_indexed', '~> 0.8.0'
 end

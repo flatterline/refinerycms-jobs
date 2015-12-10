@@ -1,34 +1,22 @@
 module Refinery
   module Jobs
     class JobsController < ::ApplicationController
+      include ControllerHelper
 
-      before_filter :find_all_jobs
-      before_filter :find_page
+      helper :'refinery/jobs/jobs'
+      
+      before_action :find_page
+      before_action :find_all_jobs, :only => [:index]
+      before_action :find_job, :only => [:show]
 
-      def index
-        # you can use meta fields from your model instead (e.g. browser_title)
-        # by swapping @page for @jobs in the line below:
-        present(@page)
-      end
+      before_action :new_job_applicaton, :only => [:index, :show]
 
       def show
-        @job = Refinery::Jobs::Job.find(params[:id])
-
-        # you can use meta fields from your model instead (e.g. browser_title)
-        # by swapping @page for @jobs in the line below:
-        present(@page)
+        @breadcrumb = OpenStruct.new({
+          title: @job.title,
+          url: refinery.jobs_job_url(@job)
+        })
       end
-
-    protected
-
-      def find_all_jobs
-        @jobs = Refinery::Jobs::Job.order("position ASC")
-      end
-
-      def find_page
-        @page = Refinery::Page.find_by_link_url("/jobs")
-      end
-
     end
   end
 end

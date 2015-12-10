@@ -1,44 +1,105 @@
 en:
   refinery:
-    admin:
-      dashboard:
-        recent_job_applications:
-          latest_job_applications: Latest Job Applications
     plugins:
       refinery_jobs:
         title: Jobs
-        description: Provides a simple jobs section
     jobs:
+      config:
+        from_name: "%{name} [%{site_name}]"
       admin:
         jobs:
-          view_live_html: "View this job <br/><em>(opens in a new window)</em>"
-          edit: "Edit this job"
-          delete: "Remove this job forever"
-          published: Published
-        index:
-          actions: Actions
-          create: "Add Job"
-          news_item: Job
-          no_items: "Sorry, no results found."
-          no_items_yet: 'There are no jobs yet. Click "Add Job" to add your first job.'
-
+          actions:
+            create_new: Create a new job
+            reorder: Reorder jobs
+            reorder_done: Reorder jobs done
+          records:
+            title: Jobs
+            sorry_no_results: "Sorry, no results found."
+            no_items_yet: There are no jobs yet.
+          job:
+            job_applications_count:
+              zero: No job application
+              one: "%{count} job application"
+              other: "%{count} job applications"
+            view_live_html: View this job <br/><em>(opens in a new window)</em>
+            view_applications_for_this_job: View applications for this job
+            edit: Edit this job
+            delete: Delete this job
+            draft: draft
+        job_applications:
+          index:
+            job_applications_for_position: 'Job applications for position "%{job_title}"'
+            back_to_jobs: Back to jobs
+          job_application:
+            created_at: Created at
+            name: Name
+            email: Email
+            phone: Phone
+            cover_letter: Cover letter
+            download_resume: "Download %{name}'s resume"
       jobs:
         show:
-          back_to_index: "Back to all jobs"
-          published: Published
-        recent_posts:
-          recent_posts: Recent Posts
+          fill: Number of positions to fill
+          ref: Reference number
+          description: Description
+          requirements_and_work_conditions: Requirements and work conditions
+          education: Education
+          experience: Years related to the job experience
+          skills: Skills
+          languages: Languages ​​asked
+          salary: Salary
+          hours: Number of hours per week
+          employment_terms: Employment terms
+          length: Length of employment
+          employment_date: Employment date
+          contact: Name of contact person
+          back_to_list: Back to jobs list
         index:
-          published: Published
-          read_more: Read more
-          no_items_yet: There are no jobs yet.
-          current_open_positions: Current open positions
           no_open_positions: There are no open positions at the moment.
+          current_open_positions: Current open positions
+      job_applications:
+        form:
+          job_application_for_position: Apply Online as %{job_title}
+          apply: Apply
+          mandatory_fields: <sup>*</sup> fields are required.
+        show:
+          job_application_successfully_submitted: 'Your job application for the <strong>"%{job_title}"</strong> position was successfully submitted. <br>You will receive a confirmation email.<br><br>Thank you.'
+          back_to_list: Back to jobs list
+      job_mailer:
+        notification:
+          greeting: Hello
+          you_recieved_new_job_application: You have received a new application on your site.
+          job_application_starts: --- Beginning of application ---
+          job_application_ends: --- End of application ---
+          from: From
+          email: Email
+          phone: Phone
+          cover_letter: Cover letter
+          resume: Resume
+          closing_line: Kind regards
+          ps: PS All applications are stored in the 'Jobs' section so you can refer to them later.
   activerecord:
     attributes:
-      job:
-        title: Job Title
+      'refinery/jobs/job':
+        title: Title
+        fill: Number of vacancies
+        ref: Reference number
         description: Description
-        publish_date: Publish date
-    models:
-      job: Job
+        education: Education
+        experience: Years related to the job experience
+        skills: Skills
+        languages: Languages ​​asked
+        salary: Salary
+        hours: Number of hours per week
+        employment_terms: Employment terms
+        length: Length of employment
+        employment_date: Employment date
+        contact: Name of contact person
+        published_at: Published at
+        draft: Save as draft
+      'refinery/jobs/job_application':
+        name: Name
+        email: Email
+        phone: Phone
+        cover_letter: Cover letter
+        resume: Resume

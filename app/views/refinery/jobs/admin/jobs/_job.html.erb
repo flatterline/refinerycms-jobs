@@ -1,22 +1,49 @@
+<% # setup params for various action links
+  open_url = refinery.jobs_admin_job_job_applications_path(job)
+  preview_url = refinery.jobs_job_url(job)
+  edit_url = refinery.edit_jobs_admin_job_path(job)
+  delete_url = refinery.jobs_admin_job_path(job)
+  delete_options = {
+    class: "cancel confirm-delete",
+    data: {confirm: t('message',  scope: 'refinery.admin.delete', title: job.title)}
+  }
+%>
+
 <li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(job) -%>">
   <span class='title'>
-    <span class='actions'>
-    <%= link_to refinery_icon_tag("folder_open.png"), refinery.job_applications_jobs_admin_job_path(job),
-                :title => 'View applications for this job' %>
-      <%= link_to refinery_icon_tag("application_go.png"), refinery.jobs_job_url(job),
-                :title  => 'View this job<br/><em>Opens in a new window</em>',
-                :target => "_blank",
-                :id     => dom_id(job, 'view') %>
-      <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_jobs_admin_job_path(job),
-                :title => 'Edit this job',
-                :id    => dom_id(job, 'edit') %>
-      <%= link_to refinery_icon_tag("delete.png"), refinery.jobs_admin_job_path(job),
-                :class   => "cancel confirm-delete",
-                :method  => :delete,
-                :title   => 'Remove this job forever',
-                :confirm => 'Are you certain?',
-                :id      => dom_id(job, 'delete') %>
+    <%= job.title.presence || job.translations.detect {|t| t.title.present?}.title %>
+    <span class="preview">
+      <% if job.draft? %>
+        <span class="label notice"><%= t('refinery.jobs.admin.jobs.job.draft') %></span>
+      <% else %>
+        <%= job.published_at.strftime('%b %d, %Y') %>
+      <% end %>
+
+      <% if Refinery::I18n.frontend_locales.many? %>
+        <span class='locales'>
+          <% job.translations.sort_by{ |t| Refinery::I18n.frontend_locales.index(t.locale)}.each do |translation| %>
+            <% if translation.title.present? %>
+              <%= link_to refinery.edit_jobs_admin_job_path(job, :switch_locale => translation.locale), :class => 'locale', title: translation.locale.upcase do %>
+
+                <div class="<%=translation.locale %> locale_marker">
+                  <%= locale_text_icon(translation.locale.upcase) %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </span>
+      <% end %>
+
+      <%= t('.job_applications_count', count: job.job_applications.count ) %>
     </span>
-    <%=h job.title %> <span class="preview">&nbsp;</span>
+  </span>
+
+  <span class='actions'>
+    <% if job.job_applications.any? %>
+      <%= action_icon(:folder, open_url, t('.view_applications_for_this_job')) %>
+    <% end %>
+    <%= action_icon(:preview, preview_url, t('.view_live_html')) %>
+    <%= action_icon(:edit, edit_url, t('.edit' ) ) %>
+    <%= action_icon(:delete, delete_url, t('.delete' ), delete_options ) %>
   </span>
 </li>

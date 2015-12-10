@@ -1,42 +1,7 @@
-<div id='actions'>
-  <ul>
-    <li>
-      <%= render :partial => "/refinery/admin/search", :locals => {:url => refinery.jobs_admin_jobs_path} %>
-    </li>
-    <li>
-      <%= link_to "Create New Job", refinery.new_jobs_admin_job_path, :class => "add_icon" %>
-    </li>
-  <% if !searching? and Refinery::Jobs::Job.count > 1 %>
-    <li>
-      <%= link_to "Reorder Jobs", refinery.jobs_admin_jobs_path, :id => "reorder_action", :class => "reorder_icon" %>
-      <%= link_to "Done Reordering Jobs", refinery.jobs_admin_jobs_path, :id => "reorder_action_done", :style => "display: none;", :class => "reorder_icon" %>
-    </li>
-  <% end %>
-  </ul>
-</div>
-<div id='records'>
-  <% if searching? %>
-    <h2>Search Results for "<%= params[:search] %>"</h2>
-    <% if @jobs.any? %>
-      <%= render :partial => "jobs", :collection => @jobs %>
-    <% else %>
-      <p>Sorry, no results found.</p>
-    <% end %>
-  <% else %>
-    <% if @jobs.any? %>
-      <%= will_paginate @jobs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-       <ul id='sortable_list'>
-        <%= render :partial => "sortable_list" %>
-       </ul>
-      <%= will_paginate @jobs, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-    <% else %>
-      <p>
-        <strong>
-          There are no jobs yet.
-          Click "Create New Job" to add your first jobs.
-        </strong>
-      </p>
-    <% end %>
-  <% end %>
-</div>
-<%= render :partial => "/refinery/admin/make_sortable", :locals => {:tree => false } if !searching? and Refinery::Jobs::Job.count > 1 %>
+<section id='records'>
+  <%= render 'records' %>
+</section>
+<aside id='actions'>
+  <%= render 'actions' %>
+</aside>
+<%= render '/refinery/admin/make_sortable', :tree => false if !searching? and ::Refinery::Jobs::Admin::JobsController.sortable? and ::Refinery::Jobs::Job.many? %>

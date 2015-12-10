@@ -1,35 +1,93 @@
 <%= form_for [refinery, :jobs, :admin, @job] do |f| -%>
+  <%= render "/refinery/admin/error_messages",
+             :object => f.object,
+             :include_object_name => true %>
+
+  <%= render '/refinery/admin/locale_picker',
+              :current_locale => Globalize.locale %>
 
   <div class='field'>
     <%= f.label :title -%>
-    <%= f.text_field :title, :class => 'larger' -%>
+    <%= f.text_field :title, :class => 'larger widest' -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :fill -%>
+    <%= f.number_field :fill, :class => "larger" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :ref -%>
+    <%= f.text_field :ref, :class => "larger" -%>
   </div>
 
   <div class='field'>
     <%= f.label :description -%>
-    <%= f.text_area :description, :rows => 8, :cols => 140, :class => 'wymeditor' -%>
+    <%= f.text_area :description, :rows => 20, :class => 'wymeditor widest' -%>
   </div>
 
-  <% if can?(:assign_wtc, @job) %>
-    <div class="field">
-      <%= f.label :world_trade_center_id, 'World Trade Center' %>
-      Leave blank to make job for the WTCA<br/>
-      <%= f.collection_select :world_trade_center_id, WorldTradeCenter.all, :id, :name, { include_blank: 'None' } %>
-    </div>
-
-  <% else %>
-    <%= f.hidden_field :world_trade_center_id, value: current_refinery_user.world_trade_center_id %>
-  <% end %>
+  <div class='field'>
+    <%= f.label :education -%>
+    <%= f.text_field :education, :class => "larger widest" -%>
+  </div>
 
   <div class='field'>
-    <%= f.label :employment_terms -%>
-    <%= f.text_field :employment_terms -%>
+    <%= f.label :experience -%>
+    <%= f.text_field :experience, :class => "larger widest" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :skills -%>
+    <%= f.text_field :skills, :class => "larger widest" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :languages -%>
+    <%= f.text_field :languages, :class => "larger widest" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :salary -%>
+    <%= f.text_field :salary, :class => "larger" -%>
   </div>
 
   <div class='field'>
     <%= f.label :hours -%>
-    <%= f.text_field :hours -%>
+    <%= f.text_field :hours, :class => "larger"  -%>
   </div>
 
-  <%= render :partial => "/refinery/admin/form_actions", :locals => {:f => f, :continue_editing => false} %>
+  <div class='field'>
+    <%= f.label :employment_terms -%>
+    <%= f.text_field :employment_terms, :class => "larger widest" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :length -%>
+    <%= f.text_field :length, :class => "larger"  -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :employment_date -%>
+    <%= f.date_field :employment_date, :class => "larger"  -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :contact -%>
+    <%= f.text_field :contact, :class => "larger widest"  -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :published_at -%>
+    <%= f.datetime_select :published_at %>
+  </div>
+
+  <div id="field">
+    <%= f.label :draft%>
+    <%= f.check_box :draft %>
+  </div>
+
+  <%= render "/refinery/admin/form_actions",
+             :f => f,
+             :continue_editing => true,
+             :delete_title => t('delete', :scope => 'refinery.blog.admin.jobs.job') %>
 <% end %>

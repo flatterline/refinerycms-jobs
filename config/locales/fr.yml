@@ -1,0 +1,106 @@
+fr:
+  refinery:
+    plugins:
+      refinery_jobs:
+        title: Offres d'emploi
+    jobs:
+      config:
+        from_name: "%{name} [%{site_name}]"
+      admin:
+        jobs:
+          actions:
+            create_new: Créer une nouvelle offre d'emploi
+            reorder: Réordonner les offres d'emploi
+            reorder_done: Fin de réordonnancement des offres d'emploi
+          records:
+            title: Offre d'emploi
+            sorry_no_results: "Désolé ! Aucun résultat."
+            no_items_yet: Il n'y a actuellement aucune offre d'emploi. Cliquer sur "Créer une nouvelle offre d'emploi" pour créer votre première offre d'emploi.
+          job:
+            job_applications_count:
+              zero: Aucune demande d'emploi
+              one: "%{count} demande d'emploi"
+              other: "%{count} demandes d'emploi"
+            view_live_html: Voir cette offre d'emploi <br/><em>(Ouvre une nouvelle fenêtre)</em>
+            view_applications_for_this_job: Voir les candidatures pour cette offre d'emploi
+            edit: Modifier cette offre d'emploi
+            delete: Supprimer définitivement cette offre d'emploi
+            draft: brouillon
+        job_applications:
+          index:
+            job_applications_for_position: 'Candidatures pour le poste de "%{job_title}"'
+            back_to_jobs: Revenir à la liste des offres d'emploi
+          job_application:
+            created_at: Créée le
+            name: Nom
+            email: Courriel
+            phone: Téléphone
+            cover_letter: Lettre de présentation
+            download_resume: "Téléchargez le Curriculum Vitae de %{name}"
+      jobs:
+        show:
+          fill: Nombre de postes à combler
+          ref: Numéro de l'offre
+          description: Description
+          requirements_and_work_conditions: Exigences et conditions de travail
+          education: Niveau d'études
+          experience: Années d'expérience reliées à l'emploi
+          skills: Description des compétences
+          languages: Langues demandées
+          salary: Salaire offert
+          hours: Nombre d'heures par semaine
+          employment_terms: Statut d'emploi
+          length: Durée de l'emploi
+          employment_date: Date prévue d'entrée en fonction
+          contact: Nom de la personne à contacter
+          back_to_list: Revenir à la liste des offres d'emploi
+        index:
+          no_open_positions: Il n'y a pas de poste ouvert pour le moment.
+          current_open_positions: Postes ouverts
+      job_applications:
+        form:
+          job_application_for_position: Postulez en ligne en tant que %{job_title}
+          apply: Postuler
+          mandatory_fields: <sup>*</sup> champs obligatoires.
+        show:
+          job_application_successfully_submitted: 'Votre candidature pour le poste de <strong>"%{job_title}"</strong> a été soumise avec succès. <br>Vous allez recevoir un courriel de confirmation.<br><br>Merci.'
+          back_to_list: Revenir à la liste des offres d'emploi
+      job_mailer:
+        notification:
+          greeting: Bonjour
+          you_recieved_new_job_application: Vous avez reçu une nouvelle candidature sur votre site.
+          job_application_starts: --- Début de la candidature ---
+          job_application_ends: --- Fin de la candidature ---
+          from: De
+          email: Courriel
+          phone: Téléphone
+          cover_letter: Lettre de présentation
+          resume: Curriculum Vitae
+          closing_line: Cordialement
+          ps: P.S. Toutes les candidatures sont stockées dans la section 'Offres d'emploi' afin que vous puissiez les consulter ultérieurement.
+  activerecord:
+    attributes:
+      'refinery/jobs/job':
+        title: Titre
+        fill: Nombre de postes à combler
+        ref: Numéro de l'offre
+        description: Description
+        requirements_and_work_conditions: Exigences et conditions de travail
+        education: Niveau d'études
+        experience: Années d'expérience reliées à l'emploi
+        skills: Description des compétences
+        languages: Langues demandées
+        salary: Salaire offert
+        hours: Nombre d'heures par semaine
+        employment_terms: Statut d'emploi
+        length: Durée de l'emploi
+        employment_date: Date prévue d'entrée en fonction
+        contact: Nom de la personne à contacter
+        published_at: Publié le
+        draft: Enregistrer comme un brouillon
+      'refinery/jobs/job_application':
+        name: Nom
+        email: Courriel
+        phone: Téléphone
+        cover_letter: Lettre de présentation
+        resume: Curriculum Vitae
