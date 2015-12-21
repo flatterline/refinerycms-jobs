@@ -1,0 +1,32 @@
+<% # setup params for various action links
+  delete_url = refinery.jobs_admin_job_job_application_path(@job, job_application)
+  delete_options = {
+     class: "cancel confirm-delete",
+            data: {
+              confirm: t('message',  scope: 'refinery.admin.delete', title: job_application.name)
+            }
+          }
+ %>
+
+<li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(job_application) -%>">
+  <span class='title'>
+    <b><%= t('.created_at')%> :</b>
+    <%= job_application.created_at.strftime('%H:%M %b %d, %Y') %><br>
+
+    <b><%= t('.name')%> :</b>
+    <%= job_application.name %> <span class="preview">&nbsp;</span><br>
+
+    <b><%= t('.phone')%> :</b>
+    <%= job_application.phone %> <span class="preview">&nbsp;</span><br>
+
+    <b><%= t('.email')%> :</b>
+    <%= job_application.email %> <span class="preview">&nbsp;</span><br>
+
+    <b><%= t('.cover_letter')%> :</b>
+    <%= job_application.cover_letter %> <span class="preview">&nbsp;</span><br>
+
+    <%= link_to t('.download_resume', name: job_application.name), job_application.resume.url %><span class="preview">&nbsp;</span><br>
+  </span>
+
+  <%= action_icon(:delete,  delete_url, t('delete', scope: 'refinery.admin.pages' ), delete_options ) %>
+</li>
