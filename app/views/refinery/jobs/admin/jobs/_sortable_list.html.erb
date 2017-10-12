@@ -1,2 +1,5 @@
-<%= render :partial => 'job', :collection => @jobs %>
-<%= render :partial => "/refinery/admin/sortable_list", :locals => {:continue_reordering => (defined?(continue_reordering) ? continue_reordering : true)} %>
+<ul id='sortable_list'>
+  <%= render :partial => 'job', :collection => @jobs %>
+</ul>
+<%= render '/refinery/admin/sortable_list',
+            :continue_reordering => (local_assigns.keys.include?(:continue_reordering)) ? continue_reordering : true %>

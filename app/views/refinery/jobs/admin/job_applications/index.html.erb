@@ -1,7 +1,7 @@
 <div id='actions'>
   <ul>
     <li>
-      <%= link_to "Back to Jobs", refinery.jobs_admin_jobs_path, :class => "back_icon" %>
+      <%= link_to t('.back_to_jobs'), refinery.jobs_admin_jobs_path, :class => "back_icon" %>
     </li>
   </ul>
 </div>
@@ -12,10 +12,10 @@
     <% if @jobs.any? %>
       <%= render :partial => "job_applications", :collection => @job_applications %>
     <% else %>
-      <p>Sorry, no results found.</p>
+      <p><%= t('.no_items_yet') %></p>
     <% end %>
   <% else %>
-    <h2>Job Applications for position: <%= @job.title %></h2>
+    <h2><%= t('.job_applications_for_position', :job_title => @job.title) %></h2>
 
     <% if @job_applications.any? %>
       <%= will_paginate @job_applications, :previous_label => '&laquo;', :next_label => '&raquo;' %>
@@ -26,7 +26,7 @@
     <% else %>
       <p>
         <strong>
-          There are no job applications yet.
+          <%= t('.no_items_yet') %>
         </strong>
       </p>
     <% end %>

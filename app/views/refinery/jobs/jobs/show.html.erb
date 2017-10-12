@@ -2,44 +2,66 @@
   <%= @job.title %>
 <% end %>
 
-<% content_for :body_content_left do %>
-  <div>
-    <h1><%= @job.title %></h1>
-  </div>
+<% content_for :body do %>
+  <p>
+    <% unless @job.fill.blank? %>
+      <strong><%= t('.fill') %></strong> : <%= @job.fill %>
+    <% end %>
 
-  <div>
-    <h2>Description</h2>
-    <%= @job.description.html_safe %>
-  </div>
-  <% unless @job.employment_terms.blank? %>
-    <div>
-      <h2 style='display:inline'>Employment Terms:</h2>  <%= @job.employment_terms.html_safe %>
-    </div>
-  <% end %>
-  <% unless @job.hours.blank?%>
-    <br>
-    <div>
-      <h2 style='display:inline'>Hours:</h2>
-      <%= @job.hours.html_safe %>
-    </div>
-  <% end %>
+    <% unless @job.ref.blank? %>
+      <br /><strong><%= t('.ref') %></strong> : <%= @job.ref %>
+    <% end %>
+  </p>
 
-  <h1><%= link_to 'Apply for this position', refinery.new_jobs_job_job_application_url(@job) %></h1>
+  <h2><%= t('.description')%></h2>
+  <%= @job.description.html_safe %>
 
-  <span class='st_twitter_large' displayText='Tweet'></span>
-  <span class='st_linkedin_large' displayText='LinkedIn'></span>
-  <span class='st_email_large' displayText='Email'></span>
+  <h2><%= t('.requirements_and_work_conditions') %></h2>
+  <p>
+    <% unless @job.education.blank? %>
+      <strong><%= t('.education') %></strong> : <%= @job.education %>
+    <% end %>
 
-<% end %>
+    <% unless @job.experience.blank? %>
+      <br /><strong><%= t('.experience') %></strong> : <%= @job.experience %>
+    <% end %>
 
-<% content_for :body_content_right do %>
+    <% unless @job.skills.blank? %>
+      <br /><strong><%= t('.skills') %></strong> : <%= @job.skills %>
+    <% end %>
 
+    <% unless @job.languages.blank? %>
+      <br /><strong><%= t('.languages') %></strong> : <%= @job.languages %>
+    <% end %>
+
+    <% unless @job.salary.blank? %>
+      <br /><strong><%= t('.salary') %></strong> : <%= @job.salary %>
+    <% end %>
+
+    <% unless @job.hours.blank? %>
+      <br /><strong><%= t('.hours') %></strong> : <%= @job.hours %>
+    <% end %>
+
+    <% unless @job.employment_terms.blank? %>
+      <br /><strong><%= t('.employment_terms') %></strong> : <%= @job.employment_terms %>
+    <% end %>
+
+    <% unless @job.length.blank? %>
+      <br /><strong><%= t('.length') %></strong> : <%= @job.length %>
+    <% end %>
+
+    <% unless @job.employment_date.blank? %>
+      <br /><strong><%= t('.employment_date') %></strong> : <%= @job.employment_date %>
+    <% end %>
+
+    <% unless @job.employment_terms.blank? %>
+      <br /><strong><%= t('.contact') %></strong> : <%= @job.contact %>
+    <% end %>
+  </p>
+
+  <%= render partial: '/refinery/jobs/job_applications/form', locals: { jobs: nil, job: @job, job_application: @job_application } %>
+
+  <p><%= link_to t('.back_to_list'), refinery.jobs_jobs_path %></p>
 <% end %>
 
 <%= render :partial => "/refinery/content_page" %>
-
-<% content_for :javascripts do %>
-  <script type="text/javascript">var switchTo5x=true;</script>
-  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-  <script type="text/javascript">stLight.options({publisher: "<%= Refinery::Setting.find_or_set(:share_this_key, SHARE_THIS_KEY) %>", doNotHash: true, doNotCopy: true, hashAddressBar: false});</script>
-<% end %>

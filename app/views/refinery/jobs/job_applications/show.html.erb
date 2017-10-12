@@ -2,18 +2,10 @@
   <%= @job.title %>
 <% end %>
 
-<% content_for :body_content_left do %>
+<% content_for :body do %>
+  <p><%= raw t('.job_application_successfully_submitted', job_title: @job.title) %></p>
 
-  <div>
-     <h1>Job Application for <%= @job.title%> position</h2>
-  </div>
- Your job application for the <b><%= @job.title%></b> position was successfully submitted. <br><br>
-Thank you.
-    <BR>
-<% end %>
-
-<% content_for :body_content_right do %>
-
+  <p><%= link_to t('.back_to_list'), refinery.jobs_jobs_path %></p>
 <% end %>
 
 <%= render :partial => "/refinery/content_page" %>

@@ -1,0 +1,105 @@
+de:
+  refinery:
+    plugins:
+      refinery_jobs:
+        title: Jobs
+    jobs:
+      config:
+        from_name: "%{name} [%{site_name}]"
+      admin:
+        jobs:
+          actions:
+            create_new: Erstelle einen neuen Job
+            reorder: Jobs anordnen
+            reorder_done: Anordnen der Jobs erledigt
+          records:
+            title: Jobs
+            sorry_no_results: Entschuldigung! Es wurden keine Ergebnisse gefunden"
+            no_items_yet: Es gibt bisher noch keine Jobs.
+          job:
+            job_applications_count:
+              zero: Keine Bewerbung
+              one: "%{count} Bewerbung"
+              other: "%{count} Bewerbungen"
+            view_live_html: Zeige den Job an <br/><em>(öffnet sich in einem neuen Fenster)</em>
+            view_applications_for_this_job: Zeige Bewerbungen für diesen Job
+            edit: Bearbeite diesen Job
+            delete: Lösche diesen Job
+            draft: Entwurf
+        job_applications:
+          index:
+            job_applications_for_position: 'Bewerbungen für die Stelle als "%{job_title}"'
+            back_to_jobs: Zurück zu den Jobs
+          job_application:
+            created_at: Erstellt am
+            name: Name
+            email: E-Mail
+            phone: Telefon
+            cover_letter: Anschreiben
+            download_resume: "Lebenslauf von %{name} herunterladen"
+      jobs:
+        show:
+          fill: Anzahl der freien Stellen
+          ref: Referenznummer
+          description: Beschreibung
+          requirements_and_work_conditions: Anforderungen und Arbeitsbedingungen
+          education: Ausbildung
+          experience: Benötigte Arbeitserfahrung in diesem Bereich in Jahren
+          skills: Fähigkeiten
+          languages: Gefragte Sprachen
+          salary: Lohn
+          hours: Anzahl der Wochenstunden
+          employment_terms: Anstellungsverhältnis
+          length: Länge der Anstellung
+          employment_date: Einstellungsdatum
+          contact: Name der Kontaktperson
+          back_to_list: Zurück zur Jobsliste
+        index:
+          no_open_positions: Es gibt zur Zeit keine offenen Stellen
+          current_open_positions: Derzeit offene Stellen
+      job_applications:
+        form:
+          job_application_for_position: Bewerbe dich online als %{job_title}
+          apply: Bewerben
+          mandatory_fields: <sup>*</sup> Felder sind verpflichtend.
+        show:
+          job_application_successfully_submitted: 'Deine Bewerbung für die Stelle als <strong>"%{job_title}"</strong> ist erfolgreich bei uns eingegangen. <br>Sie werden eine E-Mail zur Bestätigung erhalten.<br><br>Vielen Dank.'
+          back_to_list: Zurück zur Jobsliste
+      job_mailer:
+        notification:
+          greeting: Hallo
+          you_recieved_new_job_application: Du hast eine neue Bewerbung über deine Website bekommen.
+          job_application_starts: --- Anfang der Bewerbung ---
+          job_application_ends: --- Ende der Bewerbung ---
+          from: Von
+          email: E-Mail
+          phone: Telefon
+          cover_letter: Anschreiben
+          resume: Lebenslauf
+          closing_line: Viele Grüße
+          ps: PS Alle Bewerbungen sind online in dem Bereich 'Jobs' hinterlegt und können dort später betrachtet werden.
+  activerecord:
+    attributes:
+      'refinery/jobs/job':
+        title: Titel
+        fill: Anzahl der freien Stellen
+        ref: Referenznummer
+        description: Beschreibung
+        education: Ausbildung
+        experience: Benötigte Arbeitserfahrung in diesem Bereich in Jahren
+        skills: Fähigkeiten
+        languages: Gefragte Sprachen
+        salary: Lohn
+        hours: Anzahl der Wochenstunden
+        employment_terms: Employment terms
+        length: Länge der Anstellung
+        employment_date: Einstellungsdatum
+        contact: Name der Kontaktperson
+        published_at: Veröffentlicht am
+        draft: Als Entwurf speicher
+      'refinery/jobs/job_application':
+        name: Name
+        email: E-Mail
+        phone: Telefon
+        cover_letter: Anschreiben
+        resume: Lebenslauf

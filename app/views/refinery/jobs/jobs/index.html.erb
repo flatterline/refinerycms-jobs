@@ -1,6 +1,8 @@
-<% content_for :body_content_left do %>
+<% content_for :body_content_title do %>
   <h1><%= t('.current_open_positions') %></h1>
+<% end %>
 
+<% content_for :body do %>
   <% if @jobs.any? %>
     <section>
       <ul id="jobs">
@@ -11,11 +13,11 @@
         <% end %>
       </ul>
     </section>
-
   <% else %>
-
     <%= t('.no_open_positions') %>
   <% end %>
+
+  <%= render partial: '/refinery/jobs/job_applications/form', locals: { jobs: @jobs, job: nil, job_application: @job_application } %>
 <% end %>
 
 <%= render :partial => "/refinery/content_page" %>

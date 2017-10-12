@@ -2,60 +2,66 @@ module Refinery
   module Jobs
     class JobApplicationsController < ::ApplicationController
 
-      before_filter :find_all_job_applications
-      before_filter :find_page
+      before_action :find_page
+      before_action :find_job, only: [:new, :create, :show]
 
       def new
         @job_application = Refinery::Jobs::JobApplication.new
-        @job             = Refinery::Jobs::Job.find(params[:job_id])
-
         present(@page)
       end
 
       def create
-        @job_application        = Refinery::Jobs::JobApplication.new(params[:job_application])
-        @job_application.job_id = params[:job_id]
-        @job                    = @job_application.job
+        @job_application = Refinery::Jobs::JobApplication.new(job_application_params)
+        @job_application.job_id ||= @job.id
 
-        respond_to do |format|
+        if !@job_application.job_id.nil?
           if @job_application.save
-            flash[:notice] = 'Job application was successfully created.'
-            begin
-              Refinery::Jobs::JobMailer.notification(@job_application, request).deliver
-            rescue
-              logger.warn "There was an error delivering a notification.\n#{$!}\n"
+            if @job_application.ham? || Refinery::Jobs.send_notifications_for_job_applications_marked_as_spam
+              begin
+                JobMailer.notification(@job_application, request).deliver
+              rescue
+                logger.warn "There was an error delivering on job application notification.\n#{$!}\n"
+              end
+
+              if Refinery::Jobs::Setting.send_confirmation?
+                begin
+                  JobMailer.confirmation(@job_application, request).deliver
+                rescue
+                  logger.warn "There was an error delivering on job application confirmation:\n#{$!}\n"
+                end
+              end
             end
-            format.html { redirect_to refinery.jobs_job_job_application_url(@job, @job_application) }
+
+            redirect_to refinery.jobs_job_job_application_path(@job, @job_application)
           else
-            format.html { render :action => "new" }
+            render action: 'new'
           end
-        end
-        # you can use meta fields from your model instead (e.g. browser_title)
-        # by swapping @page for @jobs in the line below:
-      end
-
-      def show
-        @job_application = Refinery::Jobs::JobApplication.find(params[:id])
-        @job             = @job_application.job
-
-        present(@page)
-
-        respond_to do |format|
-          format.html { render :action => 'show' }
-          format.xml  { render :xml => @future_student }
+        else
+          error_404
         end
       end
 
-    protected
+      protected
 
-      def find_all_job_applications
-        @jobs = Refinery::Jobs::Job.find(:all, :order => "position ASC")
+      def find_job
+        @job = Refinery::Jobs::Job.live.friendly.find(params[:job_id] || params[:job_application][:job_id])
       end
 
       def find_page
-        @page = Refinery::Page.find_by_link_url("/jobs")
+        @page = Refinery::Page.friendly.find_by(link_url: Refinery::Jobs.page_url)
       end
 
+      def job_application_params
+        params.require(:job_application).permit(permitted_job_application_params)
+      end
+
+      private
+
+      def permitted_job_application_params
+        [
+          :job_id, :name, :email, :phone, :cover_letter, :resume
+        ]
+      end
     end
   end
 end
